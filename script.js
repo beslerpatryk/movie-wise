@@ -9,6 +9,7 @@ const form = document.getElementById('form')
 const search = document.getElementById('search')
 const input = document.querySelector('input')
 const suggestions = document.querySelector('.suggestions')
+
 var previousSearchTerm = ""
 
 let moviePages = 1;
@@ -284,9 +285,35 @@ function showDetails(details,images,videos,credits){
             </div>
         `
         }
+
         contentContainer.appendChild(movieEl)
+
+    window.addEventListener('keyup', handleDetailEscape)
 }
 
+function handleDetailEscape(e){
+    const detailEl = document.getElementById("movie-detail")
+
+    if(e.key === "Escape" && detailEl != null){
+        removeDetail()
+        window.removeEventListener('keyup', handleDetailEscape)
+    }
+}
+
+function handleTrailerEscape(e){
+    const detailEl = document.getElementById("movie-detail")
+
+    if(e.key === "Escape" && detailEl != null){
+        if(e.key === "Escape"){
+            trailer.classList.add('hidden')
+            const source = frame.src //These three lines reset trailer playtime
+            frame.src = ''
+            frame.src = source
+        }
+        window.removeEventListener('keyup', handleTrailerEscape)
+        window.addEventListener('keyup', handleDetailEscape)
+    }
+}
 
 function appendPage(movies, pages, url){
     const oldLoadMoreButton = document.querySelector(".load-more-btn")
@@ -342,25 +369,30 @@ function showTrailer(){
     const frame = document.getElementById('frame')
     trailer.classList.remove('hidden')
 
+    window.removeEventListener('keyup', handleDetailEscape)
+    window.addEventListener('keyup', handleTrailerEscape)
+
     trailer.addEventListener('click', ()=>{
         trailer.classList.add('hidden')
 
+        //Reset the trailer playtime
         const source = frame.src
         frame.src = ''
         frame.src = source
     })
+
 }
 
-function makeCreditList(credits){
-    let creditsList = ""
-    for(let i = 0; i < 5; i++){
-        creditsList += `<li class="credits-card">
-                ${checkCredits(credits, i)}
+// function makeCreditList(credits){
+//     let creditsList = ""
+//     for(let i = 0; i < 5; i++){
+//         creditsList += `<li class="credits-card">
+//                 ${checkCredits(credits, i)}
                   
-                </li>`
-    }
-    return creditsList
-}
+//                 </li>`
+//     }
+//     return creditsList
+// }
 
 function formatRuntime(runtime){
     return Math.floor(runtime/60) + "h " + `${runtime%60}` + "min"
