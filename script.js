@@ -159,13 +159,22 @@ function showMovies(movies, pages, url){
         if(pages > 1){
             loadMoreBtn = document.createElement('button')
             loadMoreBtn.classList.add('load-more-btn')
+            loadMoreBtn.innerHTML = "Load More"
+            contentContainer.appendChild(loadMoreBtn)
+
             loadMoreBtn.addEventListener('click', () => {
+                window.addEventListener("scroll", ()=>{
+                    if(window.scrollY + window.innerHeight >= document.documentElement.scrollHeight){
+                        moviePages++
+                        url = url.replace(`page=${moviePages-1}`, `page=${moviePages}`)
+                        getMoreMovies(`${url}`);
+                        console.log("Hey!")
+                    }
+                })
                 moviePages++
                 url = url.replace(`page=${moviePages-1}`, `page=${moviePages}`)
                 getMoreMovies(`${url}`);
             })
-            loadMoreBtn.innerHTML = "Load More"
-            contentContainer.appendChild(loadMoreBtn)
         } else if (pages == 0){
             contentContainer.innerHTML = 'No results found'
             contentContainer.style = "color: white; margin-top: 4rem;"
