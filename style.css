@@ -20,18 +20,22 @@ body {
 	margin: 0;
 }
 
+/* Header */
+
 header {
 	background-color: var(--secondary-color);
 	padding: 1.5rem 8.5rem;
-	display: flex;
-	justify-content: space-between;
 	margin-bottom: 3rem;
-	/* position: fixed;
-	width: 100%;
-	z-index: 9999; */
+	display: flex;
+	justify-content: center;
 }
 
-/* Header */
+.header-wrapper {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 1300px;
+}
 
 header > a {
 	display: flex;
@@ -41,6 +45,7 @@ header > a {
 .logo {
 	cursor: pointer;
 	transform: scale(2) translateX(25%);
+	margin-right: auto;
 }
 
 .home-btn {
@@ -121,6 +126,8 @@ header > a {
 	flex-wrap: wrap;
 	justify-content: center;
 	min-height: 80vh;
+	max-width: 1440px;
+	margin: 0 auto;
 }
 
 /* Movie Cards */
@@ -418,6 +425,9 @@ footer a {
 @media (max-width: 1200px) {
 	header {
 		padding: 1.5rem 1rem;
+	}
+
+	.header-wrapper {
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
@@ -467,12 +477,6 @@ footer a {
 }
 
 @media (min-width: 2000px) {
-	.content-wrapper {
-		justify-content: center;
-		align-items: center;
-		max-width: 1440px;
-	}
-
 	main {
 		width: 100%;
 		display: flex;
